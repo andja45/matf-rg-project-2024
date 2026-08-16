@@ -30,6 +30,8 @@ private:
 
     void draw_skybox();
 
+    void set_light_uniforms(engine::resources::Shader *shader);
+
     void update_camera();
 
     bool m_draw_gui{false};
