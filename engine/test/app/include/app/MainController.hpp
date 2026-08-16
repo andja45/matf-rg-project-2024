@@ -9,7 +9,7 @@ namespace engine::test::app {
         void on_mouse_move(engine::platform::MousePosition position) override;
     };
 
-    class SceneController final : public engine::core::Controller {
+    class MainController final : public engine::core::Controller {
     public:
         std::string_view name() const override {
             return "test::app::MainController";
