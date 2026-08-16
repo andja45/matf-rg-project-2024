@@ -1,34 +1,39 @@
 #ifndef SCENECONTROLLER_HPP
 #define SCENECONTROLLER_HPP
+#include <EventChain.hpp>
+#include <Scene.hpp>
 
 namespace app {
-    class SceneController final : public engine::core::Controller {
-    public:
-        std::string_view name() const override {
-            return "app::SceneController";
-        }
+class SceneController final : public engine::core::Controller {
+public:
+    std::string_view name() const override {
+        return "app::SceneController";
+    }
 
-    private:
-        void initialize() override;
+private:
+    Scene m_scene;
+    std::unique_ptr<EventChain> m_event_chain;
 
-        bool loop() override;
+    void initialize() override;
 
-        void poll_events() override;
+    bool loop() override;
 
-        void update() override;
+    void poll_events() override;
 
-        void begin_draw() override;
+    void update() override;
 
-        void draw() override;
+    void begin_draw() override;
 
-        void end_draw() override;
+    void draw() override;
 
-        void draw_skybox();
+    void end_draw() override;
 
-        void update_camera();
+    void draw_skybox();
 
-        bool m_draw_gui{false};
-        bool m_cursor_enabled{true};
-    };
-} // namespace app
+    void update_camera();
+
+    bool m_draw_gui{false};
+    bool m_cursor_enabled{true};
+};
+}// namespace app
 #endif//SCENECONTROLLER_HPP
