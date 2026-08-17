@@ -21,7 +21,7 @@ namespace app {
         static constexpr float POINT_LIGHT_GLOW_INTENSITY      = 2.5f;
         static constexpr float PULSE_SPEED                     = 2.0f;
         static constexpr float PULSE_AMPLITUDE                 = 0.8f;
-        static constexpr float PLANET_HORIZON_ANGLE            = 3.49f;
+        static constexpr float PLANET_HORIZON_ANGLE            = 3.20f;
         static constexpr float PLANET_SKY_ANGLE                = 1.57f;
         static constexpr float PLANET_ORBIT_RADIUS_X           = 38.0f;
         static constexpr float PLANET_ORBIT_RADIUS_Y           = 28.0f;

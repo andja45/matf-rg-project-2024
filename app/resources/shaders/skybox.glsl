@@ -27,5 +27,7 @@ void main()
 {
     vec3 color = texture(skybox, TexCoords).rgb;
     color = mix(color, vec3(0.0), darkness);
+    float dither = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5;
+    color += dither / 255.0;
     FragColor = vec4(color, 1.0);
 }

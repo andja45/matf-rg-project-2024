@@ -4,35 +4,40 @@
 #include <glm/common.hpp>
 
 namespace app {
-EventChain::EventChain(Scene *scene)
+    EventChain::EventChain(Scene *scene)
     : m_directional_light(scene->directional_light())
-    , m_point_light(scene->point_light())
-    , m_planet(scene->planet())
-    , m_crystal(scene->crystal())
-    , m_crystal_base_emissive(m_crystal->emissive_color()) {
-}
-
-void EventChain::enter_phase(EventChainPhase phase, float duration) {
-    m_phase = phase;
-    m_phase_elapsed = 0.0f;
-    m_phase_duration = duration;
-}
-
-void EventChain::start() {
-    if (m_phase != EventChainPhase::Idle) {
-        return;
-    }
-    enter_phase(EventChainPhase::Dusk, DUSK_DURATION);
-}
-
-void EventChain::update(float dt) {
-    if (m_phase == EventChainPhase::Idle) {
-        return;
+  , m_point_light(scene->point_light())
+  , m_planet(scene->planet())
+  , m_crystal(scene->crystal())
+  , m_crystal_base_emissive(m_crystal->emissive_color()) {
+        float wobble = 1.0f + 0.05f * std::sin(PLANET_HORIZON_ANGLE * 5.0f);
+        glm::vec3 planet_position = m_planet->position();
+        planet_position.x         = PLANET_ORBIT_RADIUS_X * wobble * std::cos(PLANET_HORIZON_ANGLE);
+        planet_position.y         = PLANET_ORBIT_RADIUS_Y * wobble * std::sin(PLANET_HORIZON_ANGLE);
+        m_planet->set_position(planet_position);
     }
 
-    m_phase_elapsed += dt;
+    void EventChain::enter_phase(EventChainPhase phase, float duration) {
+        m_phase          = phase;
+        m_phase_elapsed  = 0.0f;
+        m_phase_duration = duration;
+    }
 
-    switch (m_phase) {
+    void EventChain::start() {
+        if (m_phase != EventChainPhase::Idle) {
+            return;
+        }
+        enter_phase(EventChainPhase::Dusk, DUSK_DURATION);
+    }
+
+    void EventChain::update(float dt) {
+        if (m_phase == EventChainPhase::Idle) {
+            return;
+        }
+
+        m_phase_elapsed += dt;
+
+        switch (m_phase) {
         case EventChainPhase::Dusk: {
             float progress = glm::clamp(m_phase_elapsed / m_phase_duration, 0.0f, 1.0f);
             m_directional_light->set_intensity(glm::mix(DEFAULT_INTENSITY, DIRECTIONAL_LIGHT_DIM_INTENSITY, progress));
@@ -42,19 +47,19 @@ void EventChain::update(float dt) {
             break;
         }
         case EventChainPhase::Night: {
-            float progress = glm::clamp(m_phase_elapsed / m_phase_duration, 0.0f, 1.0f);
+            float progress              = glm::clamp(m_phase_elapsed / m_phase_duration, 0.0f, 1.0f);
             float point_light_intensity = glm::mix(DEFAULT_INTENSITY, POINT_LIGHT_GLOW_INTENSITY, progress);
             m_point_light->set_intensity(point_light_intensity);
             m_crystal->set_emissive_color(m_crystal_base_emissive * point_light_intensity);
 
             m_skybox_darkness = glm::mix(SKYBOX_MIN_DARKNESS, SKYBOX_MAX_DARKNESS, progress);
 
-            float planet_progress = glm::smoothstep(0.0f, 1.0f, progress);
-            float angle = glm::mix(PLANET_HORIZON_ANGLE, PLANET_SKY_ANGLE, planet_progress);
-            float wobble = 1.0f + 0.05f * std::sin(angle * 5.0f);
+            float planet_progress     = glm::smoothstep(0.0f, 1.0f, progress);
+            float angle               = glm::mix(PLANET_HORIZON_ANGLE, PLANET_SKY_ANGLE, planet_progress);
+            float wobble              = 1.0f + 0.05f * std::sin(angle * 5.0f);
             glm::vec3 planet_position = m_planet->position();
-            planet_position.x = PLANET_ORBIT_RADIUS_X * wobble * std::cos(angle);
-            planet_position.y = PLANET_ORBIT_RADIUS_Y * wobble * std::sin(angle);
+            planet_position.x         = PLANET_ORBIT_RADIUS_X * wobble * std::cos(angle);
+            planet_position.y         = PLANET_ORBIT_RADIUS_Y * wobble * std::sin(angle);
             m_planet->set_position(planet_position);
 
             if (m_phase_elapsed >= m_phase_duration) {
@@ -63,21 +68,21 @@ void EventChain::update(float dt) {
             break;
         }
         case EventChainPhase::CoreGlow: {
-            float pulse = std::sin(m_phase_elapsed * PULSE_SPEED) * PULSE_AMPLITUDE;
+            float pulse                 = std::sin(m_phase_elapsed * PULSE_SPEED) * PULSE_AMPLITUDE;
             float point_light_intensity = POINT_LIGHT_GLOW_INTENSITY + pulse;
             m_point_light->set_intensity(point_light_intensity);
             m_crystal->set_emissive_color(m_crystal_base_emissive * point_light_intensity);
             break;
         }
         default: break;
+        }
     }
-}
 
-bool EventChain::directional_light_locked() const {
-    return m_phase == EventChainPhase::Dusk;
-}
+    bool EventChain::directional_light_locked() const {
+        return m_phase == EventChainPhase::Dusk;
+    }
 
-float EventChain::skybox_darkness() const {
-    return m_skybox_darkness;
-}
-}// namespace app
+    float EventChain::skybox_darkness() const {
+        return m_skybox_darkness;
+    }
+} // namespace app

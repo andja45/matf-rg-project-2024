@@ -4,42 +4,44 @@
 #include <Scene.hpp>
 
 namespace app {
-class SceneController final : public engine::core::Controller {
-public:
-    std::string_view name() const override {
-        return "app::SceneController";
-    }
+    class SceneController final : public engine::core::Controller {
+    public:
+        std::string_view name() const override {
+            return "app::SceneController";
+        }
 
-    float directional_light_intensity() const;
-    void set_directional_light_intensity(float intensity);
-    bool directional_light_adjustable() const;
+        float directional_light_intensity() const;
 
-private:
-    Scene m_scene;
-    std::unique_ptr<EventChain> m_event_chain;
+        void set_directional_light_intensity(float intensity);
 
-    void initialize() override;
+        bool directional_light_adjustable() const;
 
-    bool loop() override;
+    private:
+        Scene m_scene;
+        std::unique_ptr<EventChain> m_event_chain;
 
-    void poll_events() override;
+        void initialize() override;
 
-    void update() override;
+        bool loop() override;
 
-    void begin_draw() override;
+        void poll_events() override;
 
-    void draw() override;
+        void update() override;
 
-    void end_draw() override;
+        void begin_draw() override;
 
-    void draw_skybox();
+        void draw() override;
 
-    void set_light_uniforms(engine::resources::Shader *shader);
+        void end_draw() override;
 
-    void update_camera();
+        void draw_skybox();
 
-    bool m_draw_gui{false};
-    bool m_cursor_enabled{false};
-};
-}// namespace app
+        void set_light_uniforms(engine::resources::Shader *shader);
+
+        void update_camera();
+
+        bool m_draw_gui{false};
+        bool m_cursor_enabled{false};
+    };
+} // namespace app
 #endif//SCENECONTROLLER_HPP
