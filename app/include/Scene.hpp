@@ -18,6 +18,11 @@ public:
 
     void add_object(SceneObject object);
     const std::vector<SceneObject> &objects() const;
+
+    engine::graphics::Light *directional_light() const;
+    engine::graphics::Light *point_light() const;
+    SceneObject *planet();
+    SceneObject *crystal();
 };
 }// namespace app
 #endif//SCENE_HPP

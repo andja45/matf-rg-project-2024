@@ -8,7 +8,8 @@ namespace app {
 void SceneController::initialize() {
     engine::graphics::OpenGL::enable_depth_testing();
     m_scene.initialize();
-    m_event_chain = std::make_unique<EventChain>(m_scene.lights()[0].get(), m_scene.lights()[1].get());
+    m_event_chain = std::make_unique<EventChain>(&m_scene);
+    engine::core::Controller::get<engine::platform::PlatformController>()->set_enable_cursor(m_cursor_enabled);
 }
 
 bool SceneController::loop() {
@@ -43,18 +44,23 @@ void SceneController::begin_draw() {
 void SceneController::draw() {
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
     auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
-    auto shader = resources->shader("blinn_phong");
-
-    shader->use();
-    shader->set_mat4("projection", graphics->projection_matrix());
-    shader->set_mat4("view", graphics->camera()->view_matrix());
-    shader->set_vec3("viewPos", graphics->camera()->Position);
-    set_light_uniforms(shader);
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
 
     for (const auto &object: m_scene.objects()) {
         if (!object.visible()) {
             continue;
         }
+
+        auto shader = resources->shader(object.shader_name());
+        shader->use();
+        shader->set_mat4("projection", graphics->projection_matrix());
+        shader->set_mat4("view", graphics->camera()->view_matrix());
+        shader->set_vec3("viewPos", graphics->camera()->Position);
+        shader->set_float("time", platform->frame_time().current);
+        set_light_uniforms(shader);
+        shader->set_vec3("emissiveColor", object.emissive_color());
+        shader->set_float("specularStrength", object.specular_strength());
+
         shader->set_mat4("model", object.model_matrix());
         resources->model(object.model_name())->draw(shader);
     }
@@ -80,9 +86,26 @@ void SceneController::end_draw() {
 
 void SceneController::draw_skybox() {
     auto shader = engine::core::Controller::get<engine::resources::ResourcesController>()->shader("skybox");
+    shader->use();
+    shader->set_float("darkness", m_event_chain->skybox_darkness());
     auto skybox_cube = engine::core::Controller::get<engine::resources::ResourcesController>()->skybox(
-            "desert_dusk");
+            "soft2");
     engine::core::Controller::get<engine::graphics::GraphicsController>()->draw_skybox(shader, skybox_cube);
+}
+
+float SceneController::directional_light_intensity() const {
+    return m_scene.directional_light()->intensity();
+}
+
+void SceneController::set_directional_light_intensity(float intensity) {
+    if (m_event_chain->directional_light_locked()) {
+        return;
+    }
+    m_scene.directional_light()->set_intensity(intensity);
+}
+
+bool SceneController::directional_light_adjustable() const {
+    return !m_event_chain->directional_light_locked();
 }
 
 void SceneController::update_camera() {
