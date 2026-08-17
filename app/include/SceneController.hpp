@@ -10,6 +10,10 @@ public:
         return "app::SceneController";
     }
 
+    float directional_light_intensity() const;
+    void set_directional_light_intensity(float intensity);
+    bool directional_light_adjustable() const;
+
 private:
     Scene m_scene;
     std::unique_ptr<EventChain> m_event_chain;
@@ -35,7 +39,7 @@ private:
     void update_camera();
 
     bool m_draw_gui{false};
-    bool m_cursor_enabled{true};
+    bool m_cursor_enabled{false};
 };
 }// namespace app
 #endif//SCENECONTROLLER_HPP

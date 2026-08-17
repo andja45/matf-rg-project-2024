@@ -51,7 +51,17 @@ void PlatformController::initialize() {
     int window_width = config["window"]["width"];
     int window_height = config["window"]["height"];
     std::string window_title = config["window"]["title"];
-    GLFWwindow *handle = glfwCreateWindow(window_width, window_height, window_title.c_str(), nullptr, nullptr);
+    bool fullscreen = config["window"].value("fullscreen", false);
+
+    GLFWmonitor *monitor = nullptr;
+    if (fullscreen) {
+        monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode *video_mode = glfwGetVideoMode(monitor);
+        window_width = video_mode->width;
+        window_height = video_mode->height;
+    }
+
+    GLFWwindow *handle = glfwCreateWindow(window_width, window_height, window_title.c_str(), monitor, nullptr);
     RG_GUARANTEE(handle, "GLFW3 platform failed to create a Window.");
     m_window = Window(handle, window_width, window_height, window_title);
 
