@@ -3,13 +3,18 @@
 
 namespace app {
 SceneObject::SceneObject(std::string model_name, glm::vec3 position, glm::vec3 scale,
-                         float yaw, float pitch, float roll)
+                         float yaw, float pitch, float roll,
+                         float specular_strength,
+                         std::string shader_name, glm::vec3 emissive_color)
     : m_model_name(std::move(model_name))
     , m_position(position)
     , m_yaw(yaw)
     , m_pitch(pitch)
     , m_roll(roll)
-    , m_scale(scale) {
+    , m_scale(scale)
+    , m_specular_strength(specular_strength)
+    , m_shader_name(std::move(shader_name))
+    , m_emissive_color(emissive_color) {
 }
 
 const std::string &SceneObject::model_name() const {
@@ -18,6 +23,10 @@ const std::string &SceneObject::model_name() const {
 
 glm::vec3 SceneObject::position() const {
     return m_position;
+}
+
+void SceneObject::set_position(glm::vec3 position) {
+    m_position = position;
 }
 
 glm::mat4 SceneObject::model_matrix() const {
@@ -36,5 +45,21 @@ bool SceneObject::visible() const {
 
 void SceneObject::set_visible(bool visible) {
     m_visible = visible;
+}
+
+const std::string &SceneObject::shader_name() const {
+    return m_shader_name;
+}
+
+glm::vec3 SceneObject::emissive_color() const {
+    return m_emissive_color;
+}
+
+void SceneObject::set_emissive_color(glm::vec3 emissive_color) {
+    m_emissive_color = emissive_color;
+}
+
+float SceneObject::specular_strength() const {
+    return m_specular_strength;
 }
 }// namespace app

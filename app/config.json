@@ -1,11 +1,28 @@
 {
   "resources": {
     "models": {
+      "wasteland_wagon": {
+        "path": "wasteland_wagon/scene.gltf",
+        "flip_uvs": false
+      },
+      "crystals_of_power": {
+        "path": "crystals_of_power/scene.gltf",
+        "flip_uvs": false
+      },
+      "planet_mars": {
+        "path": "mars/scene.gltf",
+        "flip_uvs": false
+      },
+      "rocky_landscape": {
+        "path": "RockyLandscape/Mesher_LOD2.obj",
+        "flip_uvs": false
+      }
     }
   },
   "window": {
     "height": 600,
     "title": "Hello, window!",
-    "width": 800
+    "width": 800,
+    "fullscreen": true
   }
 }
