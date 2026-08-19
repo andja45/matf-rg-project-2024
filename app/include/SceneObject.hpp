@@ -8,9 +8,8 @@ namespace app {
         std::string m_model_name;
         glm::vec3 m_position = glm::vec3(0.0f);
 
-        float m_yaw   = 0.0f;
-        float m_pitch = 0.0f;
-        float m_roll  = 0.0f;
+        glm::vec3 m_rotation_axis = glm::vec3(0.0f, 1.0f, 0.0f);
+        float m_rotation_angle    = 0.0f;
 
         glm::vec3 m_scale = glm::vec3(1.0f);
 
@@ -22,7 +21,7 @@ namespace app {
 
     public:
         SceneObject(std::string model_name, glm::vec3 position, glm::vec3 scale,
-                    float yaw               = 0.0f, float pitch = 0.0f, float roll = 0.0f,
+                    glm::vec3 rotation_axis = glm::vec3(0.0f, 1.0f, 0.0f), float rotation_angle = 0.0f,
                     float specular_strength = 1.0f,
                     std::string shader_name = "blinn_phong", glm::vec3 emissive_color = glm::vec3(0.0f));
 
@@ -31,6 +30,14 @@ namespace app {
         glm::vec3 position() const;
 
         void set_position(glm::vec3 position);
+
+        glm::vec3 rotation_axis() const;
+
+        void set_rotation_axis(glm::vec3 axis);
+
+        float rotation_angle() const;
+
+        void set_rotation_angle(float angle_degrees);
 
         void set_emissive_color(glm::vec3 emissive_color);
 

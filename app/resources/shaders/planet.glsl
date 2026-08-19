@@ -25,6 +25,9 @@ uniform sampler2D texture_diffuse1;
 
 void main() {
 /**vec3 tint = vec3(0.6, 0.2, 0.15);*/
-    vec3 color = texture(texture_diffuse1, TexCoords).rgb * 0.8;
+/**vec3 color = texture(texture_diffuse1, TexCoords).rgb * 2.2;
+    FragColor = vec4(color, 1.0);*/
+    vec3 texColor = texture(texture_diffuse1, TexCoords).rgb;
+    vec3 color = texColor * 1.1 + vec3(0.4);
     FragColor = vec4(color, 1.0);
 }

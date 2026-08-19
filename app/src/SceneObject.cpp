@@ -3,14 +3,13 @@
 
 namespace app {
     SceneObject::SceneObject(std::string model_name, glm::vec3 position, glm::vec3 scale,
-                             float yaw, float pitch, float roll,
+                             glm::vec3 rotation_axis, float rotation_angle,
                              float specular_strength,
                              std::string shader_name, glm::vec3 emissive_color)
     : m_model_name(std::move(model_name))
   , m_position(position)
-  , m_yaw(yaw)
-  , m_pitch(pitch)
-  , m_roll(roll)
+  , m_rotation_axis(rotation_axis)
+  , m_rotation_angle(rotation_angle)
   , m_scale(scale)
   , m_specular_strength(specular_strength)
   , m_shader_name(std::move(shader_name))
@@ -29,12 +28,26 @@ namespace app {
         m_position = position;
     }
 
+    glm::vec3 SceneObject::rotation_axis() const {
+        return m_rotation_axis;
+    }
+
+    void SceneObject::set_rotation_axis(glm::vec3 axis) {
+        m_rotation_axis = axis;
+    }
+
+    float SceneObject::rotation_angle() const {
+        return m_rotation_angle;
+    }
+
+    void SceneObject::set_rotation_angle(float angle_degrees) {
+        m_rotation_angle = angle_degrees;
+    }
+
     glm::mat4 SceneObject::model_matrix() const {
         glm::mat4 model = glm::mat4(1.0f);
         model           = glm::translate(model, m_position);
-        model           = glm::rotate(model, glm::radians(m_yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-        model           = glm::rotate(model, glm::radians(m_pitch), glm::vec3(1.0f, 0.0f, 0.0f));
-        model           = glm::rotate(model, glm::radians(m_roll), glm::vec3(0.0f, 0.0f, 1.0f));
+        model           = glm::rotate(model, glm::radians(m_rotation_angle), m_rotation_axis);
         model           = glm::scale(model, m_scale);
         return model;
     }

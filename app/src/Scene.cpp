@@ -11,8 +11,9 @@ namespace app {
             glm::vec3(0.7, 0.3, 0.05) * 0.01f);
         add_light(std::move(directional_light));
 
-        SceneObject crystal("crystals_of_power", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.01f), 0.0f, -90.0f, 0.0f,
-                            0.8f, "blinn_phong", glm::vec3(0.8902, 0.1333, 0.3608) * 1.0f);
+        SceneObject crystal("crystals_of_power", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.01f),
+                            glm::vec3(1.0f, 0.0f, 0.0f), -90.0f,
+                            0.0f, "blinn_phong", glm::vec3(0.8902, 0.1333, 0.3608) * 1.0f);
         glm::vec3 crystal_position = crystal.position();
         add_object(std::move(crystal));
 
@@ -21,13 +22,14 @@ namespace app {
             glm::vec3(1.0f));
         add_light(std::move(point_light));
 
-        add_object(SceneObject("wasteland_wagon", glm::vec3(0.0f), glm::vec3(0.005f), 0.0f, -90.0f, 0.0f, 0.1f));
+        add_object(SceneObject("wasteland_wagon", glm::vec3(0.0f), glm::vec3(0.005f),
+                               glm::vec3(1.0f, 0.0f, 0.0f), -90.0f, 0.1f));
 
-        add_object(SceneObject("planet_mars", glm::vec3(0.0f, -2.1f, -80.0f), glm::vec3(2.6f), 0.0f, 0.0f, 0.0f,
-                               1.0f, "planet"));
+        add_object(SceneObject("planet_mars", glm::vec3(0.0f, -2.1f, -80.0f), glm::vec3(2.6f),
+                               glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 1.0f, "planet"));
 
         add_object(SceneObject("rocky_landscape", glm::vec3(0.0f, -0.5f, -7.0f), glm::vec3(150.0f, 150.0f, 150.0f),
-                               0.0f, 0.0f, 0.0f, 0.05f));
+                               glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.05f));
     }
 
     void Scene::add_light(std::unique_ptr<engine::graphics::Light> light) {
