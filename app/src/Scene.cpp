@@ -13,7 +13,7 @@ namespace app {
 
         SceneObject crystal("crystals_of_power", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.01f),
                             glm::vec3(1.0f, 0.0f, 0.0f), -90.0f,
-                            0.0f, "blinn_phong", glm::vec3(0.8902, 0.1333, 0.3608) * 1.0f);
+                            0.0f, "blinn_phong", glm::vec3(0.8902, 0.1333, 0.3608) * 1.2f);
         glm::vec3 crystal_position = crystal.position();
         add_object(std::move(crystal));
 
@@ -34,7 +34,7 @@ namespace app {
         add_object(SceneObject("rocky_landscape", glm::vec3(0.0f, -0.5f, -7.0f), glm::vec3(150.0f, 150.0f, 150.0f),
                                glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.05f));
 
-        SceneObject light_marker("light_marker_cube", crystal_base_position, glm::vec3(0.05f),
+        SceneObject light_marker("light_marker_cube", crystal_base_position, glm::vec3(0.005f),
                                  glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, "light_marker",
                                  glm::vec3(1.0f, 0.9f, 0.6f));
         light_marker.set_visible(false);
