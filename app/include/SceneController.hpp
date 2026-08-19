@@ -2,6 +2,7 @@
 #define SCENECONTROLLER_HPP
 #include <EventChain.hpp>
 #include <Scene.hpp>
+#include <engine/graphics/BloomEffect.hpp>
 
 namespace app {
     class SceneController final : public engine::core::Controller {
@@ -16,9 +17,15 @@ namespace app {
 
         bool directional_light_adjustable() const;
 
+        bool bloom_enabled() const;
+
+        void set_bloom_enabled(bool enabled);
+
     private:
         Scene m_scene;
         std::unique_ptr<EventChain> m_event_chain;
+        std::unique_ptr<engine::graphics::BloomEffect> m_bloom;
+        bool m_bloom_enabled{true};
 
         void initialize() override;
 

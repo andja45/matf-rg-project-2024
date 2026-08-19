@@ -38,6 +38,12 @@ namespace app {
             scene_controller->set_directional_light_intensity(directional_light_intensity);
         }
         ImGui::EndDisabled();
+
+        bool bloom_enabled = scene_controller->bloom_enabled();
+        if (ImGui::Checkbox("Bloom", &bloom_enabled)) {
+            scene_controller->set_bloom_enabled(bloom_enabled);
+        }
+
         ImGui::End();
 
         graphics->end_gui();

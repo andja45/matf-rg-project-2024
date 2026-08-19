@@ -9,7 +9,12 @@ namespace app {
         engine::graphics::OpenGL::enable_depth_testing();
         m_scene.initialize();
         m_event_chain = std::make_unique<EventChain>(&m_scene);
-        engine::core::Controller::get<engine::platform::PlatformController>()->set_enable_cursor(m_cursor_enabled);
+
+        auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+        platform->set_enable_cursor(m_cursor_enabled);
+
+        m_bloom = std::make_unique<engine::graphics::BloomEffect>();
+        m_bloom->init(platform->window()->width(), platform->window()->height());
     }
 
     bool SceneController::loop() {
@@ -33,8 +38,13 @@ namespace app {
 
     void SceneController::update() {
         auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+        float dt      = platform->dt();
         update_camera();
-        m_event_chain->update(platform->dt());
+        m_event_chain->update(dt);
+
+        constexpr float PLANET_SPIN_SPEED = 1.5f;
+        auto planet                       = m_scene.planet();
+        planet->set_yaw(planet->yaw() + dt * PLANET_SPIN_SPEED);
     }
 
     void SceneController::begin_draw() {
@@ -45,6 +55,8 @@ namespace app {
         auto graphics  = engine::core::Controller::get<engine::graphics::GraphicsController>();
         auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
         auto platform  = engine::core::Controller::get<engine::platform::PlatformController>();
+
+        m_bloom->begin_scene_capture();
 
         for (const auto &object: m_scene.objects()) {
             if (!object.visible()) {
@@ -66,6 +78,9 @@ namespace app {
         }
 
         draw_skybox();
+
+        m_bloom->apply(resources->shader("bloom_extract"), resources->shader("bloom_blur"),
+                       resources->shader("bloom_combine"), m_bloom_enabled);
     }
 
     void SceneController::set_light_uniforms(engine::resources::Shader *shader) {
@@ -106,6 +121,14 @@ namespace app {
 
     bool SceneController::directional_light_adjustable() const {
         return !m_event_chain->directional_light_locked();
+    }
+
+    bool SceneController::bloom_enabled() const {
+        return m_bloom_enabled;
+    }
+
+    void SceneController::set_bloom_enabled(bool enabled) {
+        m_bloom_enabled = enabled;
     }
 
     void SceneController::update_camera() {
