@@ -3,6 +3,7 @@
 #include <EventChain.hpp>
 #include <Scene.hpp>
 #include <engine/graphics/BloomEffect.hpp>
+#include <engine/graphics/PointShadowFramebuffer.hpp>
 
 namespace app {
     class SceneController final : public engine::core::Controller {
@@ -25,11 +26,21 @@ namespace app {
 
         void set_point_light_marker_enabled(bool enabled);
 
+        bool point_shadows_enabled() const;
+
+        void set_point_shadows_enabled(bool enabled);
+
     private:
         Scene m_scene;
         std::unique_ptr<EventChain> m_event_chain;
         std::unique_ptr<engine::graphics::BloomEffect> m_bloom;
         bool m_bloom_enabled{true};
+        std::unique_ptr<engine::graphics::PointShadowFramebuffer> m_point_shadow_fb;
+        bool m_point_shadows_enabled{true};
+
+        static constexpr int POINT_SHADOW_SIZE         = 1024;
+        static constexpr float POINT_SHADOW_NEAR_PLANE = 1.0f;
+        static constexpr float POINT_SHADOW_FAR_PLANE  = 25.0f;
 
         void initialize() override;
 
@@ -46,6 +57,8 @@ namespace app {
         void end_draw() override;
 
         void draw_skybox();
+
+        void render_point_shadow_depth();
 
         void set_light_uniforms(engine::resources::Shader *shader);
 

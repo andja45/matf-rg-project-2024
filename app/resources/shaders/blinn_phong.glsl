@@ -54,6 +54,53 @@ uniform sampler2D texture_diffuse1;
 uniform vec3 emissiveColor;
 uniform float specularStrength;
 
+uniform samplerCube pointShadowMap;
+uniform float pointShadowFarPlane;
+uniform bool pointShadows;
+
+vec3 gridSamplingDisk[20] = vec3[](
+vec3(1, 1, 1), vec3(1, -1, 1), vec3(-1, -1, 1), vec3(-1, 1, 1),
+vec3(1, 1, -1), vec3(1, -1, -1), vec3(-1, -1, -1), vec3(-1, 1, -1),
+vec3(1, 1, 0), vec3(1, -1, 0), vec3(-1, -1, 0), vec3(-1, 1, 0),
+vec3(1, 0, 1), vec3(-1, 0, 1), vec3(1, 0, -1), vec3(-1, 0, -1),
+vec3(0, 1, 1), vec3(0, -1, 1), vec3(0, -1, -1), vec3(0, 1, -1)
+);
+
+float hash12(vec2 p) {
+    vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+    p3 += dot(p3, p3.yzx + 33.33);
+    return fract((p3.x + p3.y) * p3.z);
+}
+
+float PointShadowCalculation(vec3 fragPos, vec3 lightPos) {
+    vec3 fragToLight = fragPos - lightPos;
+    float currentDepth = length(fragToLight);
+
+    float shadow = 0.0;
+    float bias = 0.15;
+    int samples = 20;
+    float viewDistance = length(viewPos - fragPos);
+    float diskRadius = (1.0 + (viewDistance / pointShadowFarPlane)) / 25.0;
+
+    // rotate the sample pattern by a random angle per fragment to avoid banding
+    float theta = hash12(gl_FragCoord.xy) * 6.2831853;
+    vec3 axis = normalize(fragToLight);
+    float c = cos(theta);
+    float s = sin(theta);
+
+    for (int i = 0; i < samples; ++i) {
+        vec3 offset = gridSamplingDisk[i];
+        vec3 rotatedOffset = offset * c + cross(axis, offset) * s + axis * dot(axis, offset) * (1.0 - c);
+
+        float closestDepth = texture(pointShadowMap, fragToLight + rotatedOffset * diskRadius).r;
+        closestDepth *= pointShadowFarPlane;
+        if (currentDepth - bias > closestDepth) {
+            shadow += 1.0;
+        }
+    }
+    return shadow / float(samples);
+}
+
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
@@ -97,5 +144,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
-    return (ambient + diffuse + specular);
+
+    float shadow = pointShadows ? PointShadowCalculation(fragPos, light.position) : 0.0;
+    return ambient + (1.0 - shadow) * (diffuse + specular);
 }

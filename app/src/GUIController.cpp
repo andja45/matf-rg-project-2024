@@ -49,6 +49,11 @@ namespace app {
             scene_controller->set_point_light_marker_enabled(point_light_marker_enabled);
         }
 
+        bool point_shadows_enabled = scene_controller->point_shadows_enabled();
+        if (ImGui::Checkbox("Point shadows", &point_shadows_enabled)) {
+            scene_controller->set_point_shadows_enabled(point_shadows_enabled);
+        }
+
         ImGui::End();
 
         graphics->end_gui();

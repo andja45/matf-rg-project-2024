@@ -15,6 +15,9 @@ namespace app {
 
         m_bloom = std::make_unique<engine::graphics::BloomEffect>();
         m_bloom->init(platform->window()->width(), platform->window()->height());
+
+        m_point_shadow_fb = std::make_unique<engine::graphics::PointShadowFramebuffer>();
+        m_point_shadow_fb->init(POINT_SHADOW_SIZE);
     }
 
     bool SceneController::loop() {
@@ -56,6 +59,7 @@ namespace app {
         auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
         auto platform  = engine::core::Controller::get<engine::platform::PlatformController>();
 
+        render_point_shadow_depth();
         m_bloom->begin_scene_capture();
 
         for (const auto &object: m_scene.objects()) {
@@ -73,6 +77,11 @@ namespace app {
             shader->set_vec3("emissiveColor", object.emissive_color());
             shader->set_float("specularStrength", object.specular_strength());
 
+            engine::graphics::OpenGL::bind_texture_cube_to_unit(1, m_point_shadow_fb->depth_cubemap_id());
+            shader->set_int("pointShadowMap", 1);
+            shader->set_float("pointShadowFarPlane", POINT_SHADOW_FAR_PLANE);
+            shader->set_bool("pointShadows", m_point_shadows_enabled);
+
             shader->set_mat4("model", object.model_matrix());
             resources->model(object.model_name())->draw(shader);
         }
@@ -81,6 +90,34 @@ namespace app {
 
         m_bloom->apply(resources->shader("bloom_extract"), resources->shader("bloom_blur"),
                        resources->shader("bloom_combine"), m_bloom_enabled);
+    }
+
+    void SceneController::render_point_shadow_depth() {
+        auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
+        auto platform  = engine::core::Controller::get<engine::platform::PlatformController>();
+
+        auto light_position = static_cast<engine::graphics::PointLight *>(m_scene.point_light())->position();
+
+        auto matrices = engine::graphics::PointShadowFramebuffer::calculate_shadow_matrices(
+            light_position, POINT_SHADOW_NEAR_PLANE, POINT_SHADOW_FAR_PLANE, POINT_SHADOW_SIZE, POINT_SHADOW_SIZE);
+
+        auto shader = resources->shader("point_shadow_depth");
+        shader->use();
+        for (int face = 0; face < 6; ++face) {
+            shader->set_mat4("shadowMatrices[" + std::to_string(face) + "]", matrices[face]);
+        }
+        shader->set_vec3("lightPos", light_position);
+        shader->set_float("far_plane", POINT_SHADOW_FAR_PLANE);
+
+        m_point_shadow_fb->bind();
+        for (const auto &object: m_scene.objects()) {
+            if (!object.visible()) {
+                continue;
+            }
+            shader->set_mat4("model", object.model_matrix());
+            resources->model(object.model_name())->draw(shader);
+        }
+        m_point_shadow_fb->unbind(platform->window()->width(), platform->window()->height());
     }
 
     void SceneController::set_light_uniforms(engine::resources::Shader *shader) {
@@ -137,6 +174,14 @@ namespace app {
 
     void SceneController::set_point_light_marker_enabled(bool enabled) {
         m_scene.light_marker()->set_visible(enabled);
+    }
+
+    bool SceneController::point_shadows_enabled() const {
+        return m_point_shadows_enabled;
+    }
+
+    void SceneController::set_point_shadows_enabled(bool enabled) {
+        m_point_shadows_enabled = enabled;
     }
 
     void SceneController::update_camera() {
