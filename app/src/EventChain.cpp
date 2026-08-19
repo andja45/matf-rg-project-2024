@@ -10,7 +10,7 @@ namespace app {
   , m_planet(scene->planet())
   , m_crystal(scene->crystal())
   , m_crystal_base_emissive(m_crystal->emissive_color()) {
-        float wobble = 1.0f + 0.05f * std::sin(PLANET_HORIZON_ANGLE * 5.0f);
+        float wobble              = 1.0f + 0.05f * std::sin(PLANET_HORIZON_ANGLE * 5.0f);
         glm::vec3 planet_position = m_planet->position();
         planet_position.x         = PLANET_ORBIT_RADIUS_X * wobble * std::cos(PLANET_HORIZON_ANGLE);
         planet_position.y         = PLANET_ORBIT_RADIUS_Y * wobble * std::sin(PLANET_HORIZON_ANGLE);
@@ -68,10 +68,11 @@ namespace app {
             break;
         }
         case EventChainPhase::CoreGlow: {
-            float pulse                 = std::sin(m_phase_elapsed * PULSE_SPEED) * PULSE_AMPLITUDE;
-            float point_light_intensity = POINT_LIGHT_GLOW_INTENSITY + pulse;
-            m_point_light->set_intensity(point_light_intensity);
-            m_crystal->set_emissive_color(m_crystal_base_emissive * point_light_intensity);
+            float pulse              = std::sin(m_phase_elapsed * PULSE_SPEED) * PULSE_AMPLITUDE;
+            float light_intensity    = POINT_LIGHT_GLOW_INTENSITY + pulse * 0.25f;
+            float emissive_intensity = POINT_LIGHT_GLOW_INTENSITY + pulse;
+            m_point_light->set_intensity(light_intensity);
+            m_crystal->set_emissive_color(m_crystal_base_emissive * emissive_intensity);
             break;
         }
         default: break;
