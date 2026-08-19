@@ -16,6 +16,10 @@
       "rocky_landscape": {
         "path": "RockyLandscape/Mesher_LOD2.obj",
         "flip_uvs": false
+      },
+      "light_marker_cube": {
+        "path": "cube/cube.fbx",
+        "flip_uvs": false
       }
     }
   },

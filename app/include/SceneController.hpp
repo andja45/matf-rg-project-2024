@@ -21,6 +21,10 @@ namespace app {
 
         void set_bloom_enabled(bool enabled);
 
+        bool point_light_marker_enabled() const;
+
+        void set_point_light_marker_enabled(bool enabled);
+
     private:
         Scene m_scene;
         std::unique_ptr<EventChain> m_event_chain;

@@ -44,6 +44,11 @@ namespace app {
             scene_controller->set_bloom_enabled(bloom_enabled);
         }
 
+        bool point_light_marker_enabled = scene_controller->point_light_marker_enabled();
+        if (ImGui::Checkbox("Point light marker", &point_light_marker_enabled)) {
+            scene_controller->set_point_light_marker_enabled(point_light_marker_enabled);
+        }
+
         ImGui::End();
 
         graphics->end_gui();

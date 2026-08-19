@@ -27,7 +27,15 @@ namespace app {
 
         SceneObject *planet();
 
+        const SceneObject *planet() const;
+
         SceneObject *crystal();
+
+        const SceneObject *crystal() const;
+
+        SceneObject *light_marker();
+
+        const SceneObject *light_marker() const;
     };
 } // namespace app
 #endif//SCENE_HPP

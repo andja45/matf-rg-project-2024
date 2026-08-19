@@ -44,7 +44,7 @@ namespace app {
 
         constexpr float PLANET_SPIN_SPEED = 1.5f;
         auto planet                       = m_scene.planet();
-        planet->set_yaw(planet->yaw() + dt * PLANET_SPIN_SPEED);
+        planet->set_rotation_angle(planet->rotation_angle() + dt * PLANET_SPIN_SPEED);
     }
 
     void SceneController::begin_draw() {
@@ -129,6 +129,14 @@ namespace app {
 
     void SceneController::set_bloom_enabled(bool enabled) {
         m_bloom_enabled = enabled;
+    }
+
+    bool SceneController::point_light_marker_enabled() const {
+        return m_scene.light_marker()->visible();
+    }
+
+    void SceneController::set_point_light_marker_enabled(bool enabled) {
+        m_scene.light_marker()->set_visible(enabled);
     }
 
     void SceneController::update_camera() {
