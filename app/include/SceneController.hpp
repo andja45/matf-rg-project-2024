@@ -2,70 +2,87 @@
 #define SCENECONTROLLER_HPP
 #include <EventChain.hpp>
 #include <Scene.hpp>
+#include <engine/core/Engine.hpp>
 #include <engine/graphics/BloomEffect.hpp>
 #include <engine/graphics/PointShadowFramebuffer.hpp>
 
 namespace app {
-    class SceneController final : public engine::core::Controller {
-    public:
-        std::string_view name() const override {
-            return "app::SceneController";
-        }
+class SceneController final : public engine::core::Controller {
+public:
+    std::string_view name() const override {
+        return "app::SceneController";
+    }
 
-        float directional_light_intensity() const;
+    float directional_light_intensity() const;
 
-        void set_directional_light_intensity(float intensity);
+    void set_directional_light_intensity(float intensity);
 
-        bool directional_light_adjustable() const;
+    bool directional_light_adjustable() const;
 
-        bool bloom_enabled() const;
+    bool bloom_enabled() const;
 
-        void set_bloom_enabled(bool enabled);
+    void set_bloom_enabled(bool enabled);
 
-        bool point_light_marker_enabled() const;
+    bool point_light_marker_enabled() const;
 
-        void set_point_light_marker_enabled(bool enabled);
+    void set_point_light_marker_enabled(bool enabled);
 
-        bool point_shadows_enabled() const;
+    bool point_shadows_enabled() const;
 
-        void set_point_shadows_enabled(bool enabled);
+    void set_point_shadows_enabled(bool enabled);
 
-    private:
-        Scene m_scene;
-        std::unique_ptr<EventChain> m_event_chain;
-        std::unique_ptr<engine::graphics::BloomEffect> m_bloom;
-        bool m_bloom_enabled{true};
-        std::unique_ptr<engine::graphics::PointShadowFramebuffer> m_point_shadow_fb;
-        bool m_point_shadows_enabled{true};
+    std::vector<SceneObject> &scene_objects();
 
-        static constexpr int POINT_SHADOW_SIZE         = 1024;
-        static constexpr float POINT_SHADOW_NEAR_PLANE = 1.0f;
-        static constexpr float POINT_SHADOW_FAR_PLANE  = 25.0f;
+    glm::vec3 point_light_position() const;
 
-        void initialize() override;
+    void set_point_light_position(glm::vec3 position);
 
-        bool loop() override;
+    glm::vec3 crystal_emissive_color() const;
 
-        void poll_events() override;
+    void set_crystal_emissive_color(glm::vec3 color);
 
-        void update() override;
+    float bloom_threshold() const;
 
-        void begin_draw() override;
+    void set_bloom_threshold(float threshold);
 
-        void draw() override;
+private:
+    Scene m_scene;
+    std::unique_ptr<EventChain> m_event_chain;
+    std::unique_ptr<engine::graphics::BloomEffect> m_bloom;
+    bool m_bloom_enabled{true};
+    std::unique_ptr<engine::graphics::PointShadowFramebuffer> m_point_shadow_fb;
+    bool m_point_shadows_enabled{true};
 
-        void end_draw() override;
+    float m_bloom_threshold{0.65f};
 
-        void draw_skybox();
+    static constexpr int POINT_SHADOW_SIZE = 1024;
+    static constexpr float POINT_SHADOW_NEAR_PLANE = 0.05f;
+    static constexpr float POINT_SHADOW_FAR_PLANE = 25.0f;
 
-        void render_point_shadow_depth();
+    void initialize() override;
 
-        void set_light_uniforms(engine::resources::Shader *shader);
+    bool loop() override;
 
-        void update_camera();
+    void poll_events() override;
 
-        bool m_draw_gui{false};
-        bool m_cursor_enabled{false};
-    };
-} // namespace app
+    void update() override;
+
+    void begin_draw() override;
+
+    void draw() override;
+
+    void end_draw() override;
+
+    void draw_skybox();
+
+    void render_point_shadow_depth();
+
+    void set_light_uniforms(engine::resources::Shader *shader);
+
+    void update_camera();
+
+    bool m_draw_gui{false};
+    bool m_cursor_enabled{false};
+};
+}// namespace app
 #endif//SCENECONTROLLER_HPP

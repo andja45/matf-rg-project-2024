@@ -2,20 +2,26 @@
 #define GUICONTROLLER_HPP
 
 #include <engine/core/Engine.hpp>
+#include <glm/glm.hpp>
+#include <vector>
 
 namespace app {
-    class GUIController final : public engine::core::Controller {
-    public:
-        std::string_view name() const override {
-            return "app::GUIController";
-        }
+class SceneController;
 
-    private:
-        void initialize() override;
+class GUIController final : public engine::core::Controller {
+public:
+    std::string_view name() const override {
+        return "app::GUIController";
+    }
 
-        void poll_events() override;
+private:
+    void initialize() override;
 
-        void draw() override;
-    };
-} // namespace app
+    void poll_events() override;
+
+    void draw() override;
+
+    void draw_scene_editor(SceneController *scene_controller);
+};
+}// namespace app
 #endif//GUICONTROLLER_HPP

@@ -6,36 +6,42 @@
 #include <vector>
 
 namespace app {
-    class Scene {
-        std::vector<std::unique_ptr<engine::graphics::Light> > m_lights;
-        std::vector<SceneObject> m_objects;
+class Scene {
+    std::vector<std::unique_ptr<engine::graphics::Light>> m_lights;
+    std::vector<SceneObject> m_objects;
 
-    public:
-        void initialize();
+    SceneObject *find_object_by_model_name(const std::string &model_name);
 
-        void add_light(std::unique_ptr<engine::graphics::Light> light);
+    const SceneObject *find_object_by_model_name(const std::string &model_name) const;
 
-        const std::vector<std::unique_ptr<engine::graphics::Light> > &lights() const;
+public:
+    void initialize();
 
-        void add_object(SceneObject object);
+    void add_light(std::unique_ptr<engine::graphics::Light> light);
 
-        const std::vector<SceneObject> &objects() const;
+    const std::vector<std::unique_ptr<engine::graphics::Light>> &lights() const;
 
-        engine::graphics::Light *directional_light() const;
+    void add_object(SceneObject object);
 
-        engine::graphics::Light *point_light() const;
+    const std::vector<SceneObject> &objects() const;
 
-        SceneObject *planet();
+    std::vector<SceneObject> &objects_mutable();
 
-        const SceneObject *planet() const;
+    engine::graphics::Light *directional_light() const;
 
-        SceneObject *crystal();
+    engine::graphics::Light *point_light() const;
 
-        const SceneObject *crystal() const;
+    SceneObject *planet();
 
-        SceneObject *light_marker();
+    const SceneObject *planet() const;
 
-        const SceneObject *light_marker() const;
-    };
-} // namespace app
+    SceneObject *crystal();
+
+    const SceneObject *crystal() const;
+
+    SceneObject *light_marker();
+
+    const SceneObject *light_marker() const;
+};
+}// namespace app
 #endif//SCENE_HPP
