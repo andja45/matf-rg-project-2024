@@ -113,6 +113,9 @@ void main() {
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
 
+    vec3 emissive = emissiveColor * vec3(texture(texture_diffuse1, TexCoords)) * vec3(texture(texture_diffuse1, TexCoords));
+    result += emissive;
+
     FragColor = vec4(result, 1.0);
 }
 
@@ -125,8 +128,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
     vec3 ambient = light.ambient * vec3(texture(texture_diffuse1, TexCoords));
     vec3 diffuse = light.diffuse * diff * vec3(texture(texture_diffuse1, TexCoords));
     vec3 specular = light.specular * spec * specularStrength;
-    vec3 emissive = emissiveColor * vec3(texture(texture_diffuse1, TexCoords)) * vec3(texture(texture_diffuse1, TexCoords));
-    return (ambient + diffuse + specular + emissive);
+    return (ambient + diffuse + specular);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {

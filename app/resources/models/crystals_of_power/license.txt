@@ -1,0 +1,11 @@
+Model Information:
+* title:	Crystals of Power
+* source:	https://sketchfab.com/3d-models/crystals-of-power-f07e839957784ea390d512eab6fb61a8
+* author:	mreimer (https://sketchfab.com/mreimer)
+
+Model License:
+* license type:	CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)
+* requirements:	Author must be credited. Modified versions must have the same license. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Crystals of Power" (https://sketchfab.com/3d-models/crystals-of-power-f07e839957784ea390d512eab6fb61a8) by mreimer (https://sketchfab.com/mreimer) licensed under CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)

@@ -14,11 +14,35 @@
         "flip_uvs": false
       },
       "rocky_landscape": {
-        "path": "RockyLandscape/Mesher_LOD2.obj",
+        "path": "RockyLandscape/Mesher_LOD1.obj",
         "flip_uvs": false
       },
       "light_marker_cube": {
         "path": "cube/cube.fbx",
+        "flip_uvs": false
+      },
+      "rock_mh_15_hinge": {
+        "path": "rock_mh_15/scene.gltf",
+        "flip_uvs": false
+      },
+      "rock_mh_41_raft": {
+        "path": "rock_mh_41/scene.gltf",
+        "flip_uvs": false
+      },
+      "rock_mh_12_wall": {
+        "path": "rock_mh_12/scene.gltf",
+        "flip_uvs": false
+      },
+      "rock_mh_39_arch": {
+        "path": "rock_mh_39/scene.gltf",
+        "flip_uvs": false
+      },
+      "saguaro_cactus_01": {
+        "path": "saguaro_cactus_01/scene.gltf",
+        "flip_uvs": false
+      },
+      "saguaro_cactus_02": {
+        "path": "saguaro_cactus_02/scene.gltf",
         "flip_uvs": false
       }
     }
