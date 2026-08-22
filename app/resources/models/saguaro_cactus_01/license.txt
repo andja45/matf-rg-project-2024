@@ -1,0 +1,11 @@
+Model Information:
+* title:	Saguaro
+* source:	https://sketchfab.com/3d-models/saguaro-cd04754f15b7469a89fdcfb701a2522c
+* author:	Phil.Devine (https://sketchfab.com/Phil.Devine)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Saguaro" (https://sketchfab.com/3d-models/saguaro-cd04754f15b7469a89fdcfb701a2522c) by Phil.Devine (https://sketchfab.com/Phil.Devine) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
