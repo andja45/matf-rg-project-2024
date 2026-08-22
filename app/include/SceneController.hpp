@@ -37,10 +37,6 @@ public:
 
     void set_point_light_position(glm::vec3 position);
 
-    glm::vec3 crystal_emissive_color() const;
-
-    void set_crystal_emissive_color(glm::vec3 color);
-
     float bloom_threshold() const;
 
     void set_bloom_threshold(float threshold);
@@ -73,6 +69,8 @@ private:
 
     void end_draw() override;
 
+    void terminate() override;
+
     void draw_skybox();
 
     void render_point_shadow_depth();
@@ -81,7 +79,6 @@ private:
 
     void update_camera();
 
-    bool m_draw_gui{false};
     bool m_cursor_enabled{false};
 };
 }// namespace app

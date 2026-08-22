@@ -26,7 +26,7 @@ class BloomEffect {
 public:
     void init(uint32_t width, uint32_t height);
 
-    ~BloomEffect();
+    void destroy();
 
     void begin_scene_capture();
 

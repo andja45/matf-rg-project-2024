@@ -141,6 +141,11 @@ void SceneController::end_draw() {
     engine::core::Controller::get<engine::platform::PlatformController>()->swap_buffers();
 }
 
+void SceneController::terminate() {
+    m_bloom->destroy();
+    m_point_shadow_fb->destroy();
+}
+
 void SceneController::draw_skybox() {
     auto shader = engine::core::Controller::get<engine::resources::ResourcesController>()->shader("skybox");
     shader->use();
@@ -199,14 +204,6 @@ glm::vec3 SceneController::point_light_position() const {
 
 void SceneController::set_point_light_position(glm::vec3 position) {
     static_cast<engine::graphics::PointLight *>(m_scene.point_light())->set_position(position);
-}
-
-glm::vec3 SceneController::crystal_emissive_color() const {
-    return m_scene.crystal()->emissive_color();
-}
-
-void SceneController::set_crystal_emissive_color(glm::vec3 color) {
-    m_scene.crystal()->set_emissive_color(color);
 }
 
 float SceneController::bloom_threshold() const {

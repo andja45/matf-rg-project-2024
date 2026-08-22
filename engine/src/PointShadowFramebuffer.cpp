@@ -34,7 +34,7 @@ void PointShadowFramebuffer::init(int size) {
     CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, 0);
 }
 
-PointShadowFramebuffer::~PointShadowFramebuffer() {
+void PointShadowFramebuffer::destroy() {
     CHECKED_GL_CALL(glDeleteTextures, 1, &m_depth_cubemap);
     CHECKED_GL_CALL(glDeleteFramebuffers, 1, &m_fbo);
 }

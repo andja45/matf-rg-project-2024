@@ -13,7 +13,7 @@ class PointShadowFramebuffer {
 public:
     void init(int size);
 
-    ~PointShadowFramebuffer();
+    void destroy();
 
     void bind() const;
 

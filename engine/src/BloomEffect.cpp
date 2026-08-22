@@ -92,7 +92,7 @@ void BloomEffect::init(uint32_t width, uint32_t height) {
     CHECKED_GL_CALL(glBindVertexArray, 0);
 }
 
-BloomEffect::~BloomEffect() {
+void BloomEffect::destroy() {
     CHECKED_GL_CALL(glDeleteTextures, 1, &m_scene_color_buffer);
     CHECKED_GL_CALL(glDeleteRenderbuffers, 1, &m_scene_depth_rbo);
     CHECKED_GL_CALL(glDeleteFramebuffers, 1, &m_scene_fbo);
