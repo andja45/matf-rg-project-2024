@@ -113,7 +113,8 @@ void main() {
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
 
-    vec3 emissive = emissiveColor * vec3(texture(texture_diffuse1, TexCoords)) * vec3(texture(texture_diffuse1, TexCoords));
+    vec3 tex = texture(texture_diffuse1, TexCoords).rgb;
+    vec3 emissive = emissiveColor * tex * tex;
     result += emissive;
 
     FragColor = vec4(result, 1.0);

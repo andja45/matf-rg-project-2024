@@ -56,9 +56,13 @@ void PlatformController::initialize() {
     GLFWmonitor *monitor = nullptr;
     if (fullscreen) {
         monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode *video_mode = glfwGetVideoMode(monitor);
-        window_width = video_mode->width;
-        window_height = video_mode->height;
+        const GLFWvidmode *video_mode = monitor ? glfwGetVideoMode(monitor) : nullptr;
+        if (video_mode) {
+            window_width = video_mode->width;
+            window_height = video_mode->height;
+        } else {
+            monitor = nullptr;// fallback to windowed
+        }
     }
 
     GLFWwindow *handle = glfwCreateWindow(window_width, window_height, window_title.c_str(), monitor, nullptr);
@@ -120,15 +124,15 @@ int glfw_platform_action(GLFWwindow *window, int glfw_key_code) {
 }
 
 /**
- * @brief Updates the state of a key.
- * Key states are repesented as a state machine with the following states: Released, JustPressed, Pressed, JustReleased.
- * The state machine transitions are as follows:
- * - Released -> JustPressed if the key is pressed.
- * - JustPressed -> Pressed if the key is still pressed.
- * - Pressed -> JustReleased if the key is released.
- * - JustReleased -> Released if the key is released.
- * @param key_data The key to update.
- */
+     * @brief Updates the state of a key.
+     * Key states are repesented as a state machine with the following states: Released, JustPressed, Pressed, JustReleased.
+     * The state machine transitions are as follows:
+     * - Released -> JustPressed if the key is pressed.
+     * - JustPressed -> Pressed if the key is still pressed.
+     * - Pressed -> JustReleased if the key is released.
+     * - JustReleased -> Released if the key is released.
+     * @param key_data The key to update.
+     */
 void PlatformController::update_key(Key &key_data) const {
     int engine_key_code = key_data.id();
     int glfw_key_code = g_engine_to_glfw_key.at(engine_key_code);
@@ -287,5 +291,4 @@ static void glfw_framebuffer_size_callback(GLFWwindow *window, int width, int he
 void glfw_window_close_callback(GLFWwindow *window) {
     core::Controller::get<PlatformController>()->_platform_on_window_close(window);
 }
-
 }// namespace engine::platform

@@ -67,6 +67,8 @@ void SceneController::draw() {
     render_point_shadow_depth();
     m_bloom->begin_scene_capture();
 
+    engine::graphics::OpenGL::bind_texture_cube_to_unit(1, m_point_shadow_fb->depth_cubemap_id());
+
     for (const auto &object: m_scene.objects()) {
         if (!object.visible()) {
             continue;
@@ -82,7 +84,6 @@ void SceneController::draw() {
         shader->set_vec3("emissiveColor", object.emissive_color());
         shader->set_float("specularStrength", object.specular_strength());
 
-        engine::graphics::OpenGL::bind_texture_cube_to_unit(1, m_point_shadow_fb->depth_cubemap_id());
         shader->set_int("pointShadowMap", 1);
         shader->set_float("pointShadowFarPlane", POINT_SHADOW_FAR_PLANE);
         shader->set_bool("pointShadows", m_point_shadows_enabled);
