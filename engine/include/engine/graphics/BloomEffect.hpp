@@ -24,7 +24,7 @@ class BloomEffect {
     void render_quad();
 
 public:
-    void init(uint32_t width, uint32_t height);
+    BloomEffect(uint32_t width, uint32_t height);
 
     void destroy();
 

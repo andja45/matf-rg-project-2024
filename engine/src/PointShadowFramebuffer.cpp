@@ -7,9 +7,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace engine::graphics {
-void PointShadowFramebuffer::init(int size) {
-    m_size = size;
-
+PointShadowFramebuffer::PointShadowFramebuffer(int size)
+    : m_size(size) {
     CHECKED_GL_CALL(glGenTextures, 1, &m_depth_cubemap);
     CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_CUBE_MAP, m_depth_cubemap);
     for (int i = 0; i < 6; i++) {

@@ -19,7 +19,7 @@ static uint32_t create_hdr_color_buffer(uint32_t width, uint32_t height) {
     return id;
 }
 
-void BloomEffect::init(uint32_t width, uint32_t height) {
+BloomEffect::BloomEffect(uint32_t width, uint32_t height) {
     CHECKED_GL_CALL(glGenFramebuffers, 1, &m_scene_fbo);
     CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, m_scene_fbo);
 

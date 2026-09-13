@@ -11,7 +11,7 @@ class PointShadowFramebuffer {
     int m_size = 0;
 
 public:
-    void init(int size);
+    explicit PointShadowFramebuffer(int size);
 
     void destroy();
 
