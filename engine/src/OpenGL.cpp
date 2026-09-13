@@ -177,6 +177,11 @@ void OpenGL::clear_buffers() {
     CHECKED_GL_CALL(glClear, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
+void OpenGL::bind_texture_cube_to_unit(uint32_t unit, uint32_t texture_id) {
+    CHECKED_GL_CALL(glActiveTexture, GL_TEXTURE0 + unit);
+    CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_CUBE_MAP, texture_id);
+}
+
 uint32_t face_index(std::string_view name) {
     if (name == "right") {
         return 0;

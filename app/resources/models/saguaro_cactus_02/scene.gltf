@@ -1,0 +1,718 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 3738,
+      "max": [
+        0.3020884096622467,
+        0.35622456669807434,
+        7.598879337310791
+      ],
+      "min": [
+        -0.3175119161605835,
+        -0.29649317264556885,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 44856,
+      "componentType": 5126,
+      "count": 3738,
+      "max": [
+        0.9999743103981018,
+        0.9999854564666748,
+        0.9998266696929932
+      ],
+      "min": [
+        -0.9996640682220459,
+        -0.999823808670044,
+        -0.3854568302631378
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 3738,
+      "max": [
+        0.9999922513961792,
+        0.999974250793457,
+        0.43308132886886597,
+        1.0
+      ],
+      "min": [
+        -0.9999992847442627,
+        -0.99998939037323,
+        -0.46138709783554077,
+        1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 3738,
+      "max": [
+        1.0,
+        0.8597332835197449
+      ],
+      "min": [
+        0.0,
+        0.20000000298023224
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 29904,
+      "componentType": 5126,
+      "count": 3738,
+      "max": [
+        1.0,
+        0.8597332835197449
+      ],
+      "min": [
+        0.0,
+        0.20000000298023224
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 20736,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 89712,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.2615185976028442,
+        0.6838882565498352,
+        7.635294437408447
+      ],
+      "min": [
+        -1.222672462463379,
+        -1.5586442947387695,
+        -0.032876040786504745
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 876096,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        0.9999974966049194,
+        0.9999958276748657,
+        0.9999186992645264
+      ],
+      "min": [
+        -0.9999923706054688,
+        -0.9999901652336121,
+        -0.999943733215332
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 59808,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        0.9999075531959534,
+        0.999936580657959,
+        0.9999144673347473,
+        1.0
+      ],
+      "min": [
+        -0.9999677538871765,
+        -0.999966561794281,
+        -0.9997305274009705,
+        1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 59808,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.2204545736312866,
+        1.1868398189544678
+      ],
+      "min": [
+        0.2079545557498932,
+        0.01770561933517456
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 584064,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.2204545736312866,
+        1.1868398189544678
+      ],
+      "min": [
+        0.2079545557498932,
+        0.01770561933517456
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1108320,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.2204545736312866,
+        1.1868398189544678
+      ],
+      "min": [
+        0.2079545557498932,
+        0.01770561933517456
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 82944,
+      "componentType": 5125,
+      "count": 147444,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1662480,
+      "componentType": 5126,
+      "count": 29015,
+      "max": [
+        1.6017286777496338,
+        0.8282433152198792,
+        5.764077186584473
+      ],
+      "min": [
+        -1.7415015697479248,
+        -1.8884315490722656,
+        2.330599069595337
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2010660,
+      "componentType": 5126,
+      "count": 29015,
+      "max": [
+        0.9999991655349731,
+        0.9999880790710449,
+        0.9999016523361206
+      ],
+      "min": [
+        -0.9999951720237732,
+        -0.9999496936798096,
+        -0.9999242424964905
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 1108320,
+      "componentType": 5126,
+      "count": 29015,
+      "max": [
+        0.9999368190765381,
+        0.9999076128005981,
+        0.9999901652336121,
+        1.0
+      ],
+      "min": [
+        -0.9999783635139465,
+        -0.9999772906303406,
+        -0.9998990297317505,
+        1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1632576,
+      "componentType": 5126,
+      "count": 29015,
+      "max": [
+        1.2204545736312866,
+        1.1868398189544678
+      ],
+      "min": [
+        0.2079545557498932,
+        0.01770561933517456
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1864696,
+      "componentType": 5126,
+      "count": 29015,
+      "max": [
+        1.2204545736312866,
+        1.1868398189544678
+      ],
+      "min": [
+        0.2079545557498932,
+        0.01770561933517456
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2096816,
+      "componentType": 5126,
+      "count": 29015,
+      "max": [
+        1.2204545736312866,
+        1.1868398189544678
+      ],
+      "min": [
+        0.2079545557498932,
+        0.01770561933517456
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 672720,
+      "componentType": 5125,
+      "count": 65280,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2358840,
+      "componentType": 5126,
+      "count": 15398,
+      "max": [
+        1.5672956705093384,
+        0.7890445590019226,
+        5.732467174530029
+      ],
+      "min": [
+        -1.7082128524780273,
+        -1.8511161804199219,
+        2.368471622467041
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2543616,
+      "componentType": 5126,
+      "count": 15398,
+      "max": [
+        0.9999870657920837,
+        0.9999886155128479,
+        0.9995161294937134
+      ],
+      "min": [
+        -0.9999966025352478,
+        -0.9999812245368958,
+        -0.999973475933075
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 1572560,
+      "componentType": 5126,
+      "count": 15398,
+      "max": [
+        0.9999995827674866,
+        0.9999526739120483,
+        0.9998602867126465,
+        1.0
+      ],
+      "min": [
+        -0.9999957084655762,
+        -0.9999775290489197,
+        -0.9991754293441772,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2328936,
+      "componentType": 5126,
+      "count": 15398,
+      "max": [
+        1.0,
+        -0.1669732630252838
+      ],
+      "min": [
+        0.0,
+        -0.6150000095367432
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2452120,
+      "componentType": 5126,
+      "count": 15398,
+      "max": [
+        1.0,
+        -0.1669732630252838
+      ],
+      "min": [
+        0.0,
+        -0.6150000095367432
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 933840,
+      "componentType": 5125,
+      "count": 80592,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "PlantCatalog (https://sketchfab.com/PlantCatalog)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/realistic-hd-saguaro-cactus-2030-532f007acf504ef49e231efbe357f79f",
+      "title": "Realistic HD Saguaro cactus (20/30)"
+    },
+    "generator": "Sketchfab-16.14.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1256208,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2575304,
+      "byteOffset": 1256208,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2728392,
+      "byteOffset": 3831512,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1818928,
+      "byteOffset": 6559904,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 8378832,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Carnegiea_bark_01_baseColor.png"
+    },
+    {
+      "uri": "textures/Carnegiea_bark_01_normal.png"
+    },
+    {
+      "uri": "textures/Cactus_spines_01_baseColor.png"
+    },
+    {
+      "uri": "textures/Cactus_spines_01_normal.png"
+    },
+    {
+      "uri": "textures/Carnegiea_bark_03_baseColor.png"
+    },
+    {
+      "uri": "textures/Carnegiea_bark_03_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Carnegiea_bark_01",
+      "normalTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.8629443272753985
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "Cactus_spines_01",
+      "normalTexture": {
+        "index": 3,
+        "texCoord": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.8933010203369545
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "Carnegiea_bark_03",
+      "normalTexture": {
+        "index": 5
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 4
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.8629443272753985
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Carnegiea_gigantea_HD_Carnegiea bark 01_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Carnegiea_gigantea_HD_Cactus spines 01_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6,
+            "TANGENT": 8,
+            "TEXCOORD_0": 9,
+            "TEXCOORD_1": 10,
+            "TEXCOORD_2": 11
+          },
+          "indices": 12,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Carnegiea_gigantea_HD_Cactus spines 01_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 14,
+            "POSITION": 13,
+            "TANGENT": 15,
+            "TEXCOORD_0": 16,
+            "TEXCOORD_1": 17,
+            "TEXCOORD_2": 18
+          },
+          "indices": 19,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Carnegiea_gigantea_HD_Carnegiea bark 03_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 21,
+            "POSITION": 20,
+            "TANGENT": 22,
+            "TEXCOORD_0": 23,
+            "TEXCOORD_1": 24
+          },
+          "indices": 25,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Carnegiea gigantea HD_Standard no flower mat 100_LOD0.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Carnegiea_gigantea_HD"
+    },
+    {
+      "mesh": 0,
+      "name": "Carnegiea_gigantea_HD_Carnegiea bark 01_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Carnegiea_gigantea_HD_Cactus spines 01_0"
+    },
+    {
+      "mesh": 2,
+      "name": "Carnegiea_gigantea_HD_Cactus spines 01_0"
+    },
+    {
+      "mesh": 3,
+      "name": "Carnegiea_gigantea_HD_Carnegiea bark 03_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}

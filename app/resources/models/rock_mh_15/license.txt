@@ -1,0 +1,11 @@
+Model Information:
+* title:	Rock (15)
+* source:	https://sketchfab.com/3d-models/rock-15-693dae21edda436694432530f8317506
+* author:	mohamedhussien (https://sketchfab.com/mohamedhussien)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Rock (15)" (https://sketchfab.com/3d-models/rock-15-693dae21edda436694432530f8317506) by mohamedhussien (https://sketchfab.com/mohamedhussien) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
