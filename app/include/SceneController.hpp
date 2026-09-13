@@ -1,6 +1,7 @@
 #ifndef SCENECONTROLLER_HPP
 #define SCENECONTROLLER_HPP
 #include <EventChain.hpp>
+#include <Light.hpp>
 #include <Scene.hpp>
 #include <engine/core/Engine.hpp>
 #include <engine/graphics/BloomEffect.hpp>

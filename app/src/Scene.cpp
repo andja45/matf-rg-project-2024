@@ -1,15 +1,15 @@
 #include <Scene.hpp>
 #include <algorithm>
-#include <engine/graphics/DirectionalLight.hpp>
-#include <engine/graphics/PointLight.hpp>
 #include <utility>
 
 namespace app {
 void Scene::initialize() {
-    auto directional_light = std::make_unique<engine::graphics::DirectionalLight>(
-            glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.7, 0.3, 0.05) * 0.2f, glm::vec3(0.7, 0.3, 0.05) * 0.8f,
-            glm::vec3(0.7, 0.3, 0.05) * 0.01f);
-    add_light(std::move(directional_light));
+    m_directional_light = DirectionalLight{
+            .direction = glm::vec3(-0.2f, -1.0f, -0.3f),
+            .ambient = glm::vec3(0.7, 0.3, 0.05) * 0.2f,
+            .diffuse = glm::vec3(0.7, 0.3, 0.05) * 0.8f,
+            .specular = glm::vec3(0.7, 0.3, 0.05) * 0.01f,
+    };
 
     constexpr float GROUND_Y = -0.393f;
 
@@ -23,10 +23,15 @@ void Scene::initialize() {
 
     glm::vec3 point_light_start_position = glm::vec3(crystal_base_position.x, -0.362f, crystal_base_position.z);
 
-    auto point_light = std::make_unique<engine::graphics::PointLight>(
-            point_light_start_position, 1.0f, 0.045f, 0.0075f, glm::vec3(0.05f),
-            glm::vec3(0.7608, 0.2431, 0.3961) * 0.82f, glm::vec3(1.0f));
-    add_light(std::move(point_light));
+    m_point_light = PointLight{
+            .position = point_light_start_position,
+            .constant = 1.0f,
+            .linear = 0.045f,
+            .quadratic = 0.0075f,
+            .ambient = glm::vec3(0.05f),
+            .diffuse = glm::vec3(0.7608, 0.2431, 0.3961) * 0.82f,
+            .specular = glm::vec3(1.0f),
+    };
 
     add_object(SceneObject("wasteland_wagon", glm::vec3(1.75f, GROUND_Y + 0.038f, -8.0f), glm::vec3(0.005f),
                            glm::vec3(1.0f, 0.0f, 0.0f), -90.0f, 0.145f));
@@ -67,14 +72,6 @@ void Scene::initialize() {
     add_object(std::move(light_marker));
 }
 
-void Scene::add_light(std::unique_ptr<engine::graphics::Light> light) {
-    m_lights.push_back(std::move(light));
-}
-
-const std::vector<std::unique_ptr<engine::graphics::Light>> &Scene::lights() const {
-    return m_lights;
-}
-
 void Scene::add_object(SceneObject object) {
     m_objects.push_back(std::move(object));
 }
@@ -87,57 +84,31 @@ std::vector<SceneObject> &Scene::objects_mutable() {
     return m_objects;
 }
 
-engine::graphics::Light *Scene::directional_light() const {
-    for (const auto &light: m_lights) {
-        if (dynamic_cast<engine::graphics::DirectionalLight *>(light.get()) != nullptr) {
-            return light.get();
-        }
-    }
-    return nullptr;
+DirectionalLight &Scene::directional_light() {
+    return m_directional_light;
 }
 
-engine::graphics::Light *Scene::point_light() const {
-    for (const auto &light: m_lights) {
-        if (dynamic_cast<engine::graphics::PointLight *>(light.get()) != nullptr) {
-            return light.get();
-        }
-    }
-    return nullptr;
+const DirectionalLight &Scene::directional_light() const {
+    return m_directional_light;
 }
 
-SceneObject *Scene::find_object_by_model_name(const std::string &model_name) {
+PointLight &Scene::point_light() {
+    return m_point_light;
+}
+
+const PointLight &Scene::point_light() const {
+    return m_point_light;
+}
+
+SceneObject *Scene::find_object_by_model_name(std::string_view model_name) {
     return const_cast<SceneObject *>(std::as_const(*this).find_object_by_model_name(model_name));
 }
 
-const SceneObject *Scene::find_object_by_model_name(const std::string &model_name) const {
+const SceneObject *Scene::find_object_by_model_name(std::string_view model_name) const {
     auto it = std::find_if(m_objects.begin(), m_objects.end(),
                            [&model_name](const SceneObject &object) {
                                return object.model_name() == model_name;
                            });
     return it == m_objects.end() ? nullptr : &(*it);
-}
-
-SceneObject *Scene::planet() {
-    return find_object_by_model_name("planet_mars");
-}
-
-const SceneObject *Scene::planet() const {
-    return find_object_by_model_name("planet_mars");
-}
-
-SceneObject *Scene::crystal() {
-    return find_object_by_model_name("crystals_of_power");
-}
-
-const SceneObject *Scene::crystal() const {
-    return find_object_by_model_name("crystals_of_power");
-}
-
-SceneObject *Scene::light_marker() {
-    return find_object_by_model_name("light_marker_cube");
-}
-
-const SceneObject *Scene::light_marker() const {
-    return find_object_by_model_name("light_marker_cube");
 }
 }// namespace app

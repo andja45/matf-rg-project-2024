@@ -1,25 +1,18 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
+#include <Light.hpp>
 #include <SceneObject.hpp>
-#include <engine/graphics/Light.hpp>
-#include <memory>
+#include <string_view>
 #include <vector>
 
 namespace app {
 class Scene {
-    std::vector<std::unique_ptr<engine::graphics::Light>> m_lights;
+    DirectionalLight m_directional_light;
+    PointLight m_point_light;
     std::vector<SceneObject> m_objects;
-
-    SceneObject *find_object_by_model_name(const std::string &model_name);
-
-    const SceneObject *find_object_by_model_name(const std::string &model_name) const;
 
 public:
     void initialize();
-
-    void add_light(std::unique_ptr<engine::graphics::Light> light);
-
-    const std::vector<std::unique_ptr<engine::graphics::Light>> &lights() const;
 
     void add_object(SceneObject object);
 
@@ -27,21 +20,17 @@ public:
 
     std::vector<SceneObject> &objects_mutable();
 
-    engine::graphics::Light *directional_light() const;
+    DirectionalLight &directional_light();
 
-    engine::graphics::Light *point_light() const;
+    const DirectionalLight &directional_light() const;
 
-    SceneObject *planet();
+    PointLight &point_light();
 
-    const SceneObject *planet() const;
+    const PointLight &point_light() const;
 
-    SceneObject *crystal();
+    SceneObject *find_object_by_model_name(std::string_view model_name);
 
-    const SceneObject *crystal() const;
-
-    SceneObject *light_marker();
-
-    const SceneObject *light_marker() const;
+    const SceneObject *find_object_by_model_name(std::string_view model_name) const;
 };
 }// namespace app
 #endif//SCENE_HPP

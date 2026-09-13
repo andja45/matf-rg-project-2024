@@ -1,7 +1,6 @@
 #ifndef EVENTCHAIN_HPP
 #define EVENTCHAIN_HPP
-#include <engine/graphics/Light.hpp>
-#include <engine/graphics/PointLight.hpp>
+#include <Light.hpp>
 
 namespace app {
 class Scene;
@@ -40,8 +39,8 @@ class EventChain {
     float m_phase_duration = 0.0f;
     float m_elapsed_total = 0.0f;
 
-    engine::graphics::Light *m_directional_light;
-    engine::graphics::PointLight *m_point_light;
+    DirectionalLight *m_directional_light;
+    PointLight *m_point_light;
     SceneObject *m_planet;
     SceneObject *m_crystal;
     glm::vec3 m_crystal_base_emissive;

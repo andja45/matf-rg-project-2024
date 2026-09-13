@@ -1,7 +1,6 @@
 #include <SceneController.hpp>
 #include <engine/core/Engine.hpp>
 #include <engine/graphics/GraphicsController.hpp>
-#include <engine/graphics/PointLight.hpp>
 #include <glm/trigonometric.hpp>
 
 namespace app {
@@ -13,11 +12,10 @@ void SceneController::initialize() {
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
     platform->set_enable_cursor(m_cursor_enabled);
 
-    m_bloom = std::make_unique<engine::graphics::BloomEffect>();
-    m_bloom->init(platform->window()->width(), platform->window()->height());
+    m_bloom = std::make_unique<engine::graphics::BloomEffect>(platform->window()->width(),
+                                                              platform->window()->height());
 
-    m_point_shadow_fb = std::make_unique<engine::graphics::PointShadowFramebuffer>();
-    m_point_shadow_fb->init(POINT_SHADOW_SIZE);
+    m_point_shadow_fb = std::make_unique<engine::graphics::PointShadowFramebuffer>(POINT_SHADOW_SIZE);
 }
 
 bool SceneController::loop() {
@@ -46,11 +44,11 @@ void SceneController::update() {
     m_event_chain->update(dt);
 
     constexpr float PLANET_SPIN_SPEED = 1.5f;
-    auto planet = m_scene.planet();
+    auto planet = m_scene.find_object_by_model_name("planet_mars");
     planet->set_rotation_angle(planet->rotation_angle() + dt * PLANET_SPIN_SPEED);
 
-    auto point_light_position = static_cast<engine::graphics::PointLight *>(m_scene.point_light())->position();
-    auto light_marker = m_scene.light_marker();
+    auto point_light_position = m_scene.point_light().position;
+    auto light_marker = m_scene.find_object_by_model_name("light_marker_cube");
     light_marker->set_position(point_light_position);
     light_marker->set_rotation_angle(glm::degrees(platform->frame_time().current));
 }
@@ -102,7 +100,7 @@ void SceneController::render_point_shadow_depth() {
     auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
     auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
 
-    auto light_position = static_cast<engine::graphics::PointLight *>(m_scene.point_light())->position();
+    auto light_position = m_scene.point_light().position;
 
     auto matrices = engine::graphics::PointShadowFramebuffer::calculate_shadow_matrices(
             light_position, POINT_SHADOW_NEAR_PLANE, POINT_SHADOW_FAR_PLANE, POINT_SHADOW_SIZE, POINT_SHADOW_SIZE);
@@ -127,15 +125,20 @@ void SceneController::render_point_shadow_depth() {
 }
 
 void SceneController::set_light_uniforms(engine::resources::Shader *shader) {
-    int point_light_index = 0;
-    for (const auto &light: m_scene.lights()) {
-        if (dynamic_cast<engine::graphics::PointLight *>(light.get()) != nullptr) {
-            light->set_uniforms(shader, point_light_index);
-            ++point_light_index;
-        } else {
-            light->set_uniforms(shader, 0);
-        }
-    }
+    const auto &dir = m_scene.directional_light();
+    shader->set_vec3("dirLight.direction", dir.direction);
+    shader->set_vec3("dirLight.ambient", dir.ambient * dir.intensity);
+    shader->set_vec3("dirLight.diffuse", dir.diffuse * dir.intensity);
+    shader->set_vec3("dirLight.specular", dir.specular * dir.intensity);
+
+    const auto &point = m_scene.point_light();
+    shader->set_vec3("pointLights[0].position", point.position);
+    shader->set_float("pointLights[0].constant", point.constant);
+    shader->set_float("pointLights[0].linear", point.linear);
+    shader->set_float("pointLights[0].quadratic", point.quadratic);
+    shader->set_vec3("pointLights[0].ambient", point.ambient * point.intensity);
+    shader->set_vec3("pointLights[0].diffuse", point.diffuse * point.intensity);
+    shader->set_vec3("pointLights[0].specular", point.specular * point.intensity);
 }
 
 void SceneController::end_draw() {
@@ -157,14 +160,14 @@ void SceneController::draw_skybox() {
 }
 
 float SceneController::directional_light_intensity() const {
-    return m_scene.directional_light()->intensity();
+    return m_scene.directional_light().intensity;
 }
 
 void SceneController::set_directional_light_intensity(float intensity) {
     if (m_event_chain->directional_light_locked()) {
         return;
     }
-    m_scene.directional_light()->set_intensity(intensity);
+    m_scene.directional_light().intensity = intensity;
 }
 
 bool SceneController::directional_light_adjustable() const {
@@ -180,11 +183,11 @@ void SceneController::set_bloom_enabled(bool enabled) {
 }
 
 bool SceneController::point_light_marker_enabled() const {
-    return m_scene.light_marker()->visible();
+    return m_scene.find_object_by_model_name("light_marker_cube")->visible();
 }
 
 void SceneController::set_point_light_marker_enabled(bool enabled) {
-    m_scene.light_marker()->set_visible(enabled);
+    m_scene.find_object_by_model_name("light_marker_cube")->set_visible(enabled);
 }
 
 bool SceneController::point_shadows_enabled() const {
@@ -200,11 +203,11 @@ std::vector<SceneObject> &SceneController::scene_objects() {
 }
 
 glm::vec3 SceneController::point_light_position() const {
-    return static_cast<engine::graphics::PointLight *>(m_scene.point_light())->position();
+    return m_scene.point_light().position;
 }
 
 void SceneController::set_point_light_position(glm::vec3 position) {
-    static_cast<engine::graphics::PointLight *>(m_scene.point_light())->set_position(position);
+    m_scene.point_light().position = position;
 }
 
 float SceneController::bloom_threshold() const {
