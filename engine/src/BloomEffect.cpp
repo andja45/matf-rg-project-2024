@@ -118,6 +118,10 @@ void BloomEffect::begin_scene_capture() {
     OpenGL::clear_buffers();
 }
 
+uint32_t BloomEffect::scene_fbo_id() const {
+    return m_scene_fbo;
+}
+
 void BloomEffect::apply(resources::Shader *extract_shader, resources::Shader *blur_shader,
                         resources::Shader *combine_shader, bool bloom_enabled, float threshold) {
     CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, m_bright_fbo);

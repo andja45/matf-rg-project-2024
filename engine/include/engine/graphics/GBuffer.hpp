@@ -20,13 +20,8 @@ public:
 
     uint32_t fbo_id() const;
 
-    uint32_t position_texture_id() const;
-
-    uint32_t normal_spec_texture_id() const;
-
-    uint32_t albedo_texture_id() const;
-
-    uint32_t emissive_texture_id() const;
+    void bind_textures(uint32_t position_unit, uint32_t normal_spec_unit, uint32_t albedo_unit,
+                       uint32_t emissive_unit) const;
 };
 }// namespace engine::graphics
 #endif//GBUFFER_HPP

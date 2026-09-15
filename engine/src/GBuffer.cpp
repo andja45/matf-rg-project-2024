@@ -61,19 +61,15 @@ uint32_t GBuffer::fbo_id() const {
     return m_fbo;
 }
 
-uint32_t GBuffer::position_texture_id() const {
-    return m_position;
-}
-
-uint32_t GBuffer::normal_spec_texture_id() const {
-    return m_normal_spec;
-}
-
-uint32_t GBuffer::albedo_texture_id() const {
-    return m_albedo;
-}
-
-uint32_t GBuffer::emissive_texture_id() const {
-    return m_emissive;
+void GBuffer::bind_textures(uint32_t position_unit, uint32_t normal_spec_unit, uint32_t albedo_unit,
+                            uint32_t emissive_unit) const {
+    CHECKED_GL_CALL(glActiveTexture, GL_TEXTURE0 + position_unit);
+    CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_2D, m_position);
+    CHECKED_GL_CALL(glActiveTexture, GL_TEXTURE0 + normal_spec_unit);
+    CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_2D, m_normal_spec);
+    CHECKED_GL_CALL(glActiveTexture, GL_TEXTURE0 + albedo_unit);
+    CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_2D, m_albedo);
+    CHECKED_GL_CALL(glActiveTexture, GL_TEXTURE0 + emissive_unit);
+    CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_2D, m_emissive);
 }
 }// namespace engine::graphics

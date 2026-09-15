@@ -30,6 +30,8 @@ public:
 
     void begin_scene_capture();
 
+    uint32_t scene_fbo_id() const;
+
     void apply(resources::Shader *extract_shader, resources::Shader *blur_shader,
                resources::Shader *combine_shader, bool bloom_enabled, float threshold);
 };
