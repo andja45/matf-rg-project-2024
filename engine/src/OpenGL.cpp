@@ -182,6 +182,13 @@ void OpenGL::bind_texture_cube_to_unit(uint32_t unit, uint32_t texture_id) {
     CHECKED_GL_CALL(glBindTexture, GL_TEXTURE_CUBE_MAP, texture_id);
 }
 
+void OpenGL::blit_depth_buffer(uint32_t src_fbo, uint32_t dst_fbo, int width, int height) {
+    CHECKED_GL_CALL(glBindFramebuffer, GL_READ_FRAMEBUFFER, src_fbo);
+    CHECKED_GL_CALL(glBindFramebuffer, GL_DRAW_FRAMEBUFFER, dst_fbo);
+    CHECKED_GL_CALL(glBlitFramebuffer, 0, 0, width, height, 0, 0, width, height, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+    CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, dst_fbo);
+}
+
 uint32_t face_index(std::string_view name) {
     if (name == "right") {
         return 0;

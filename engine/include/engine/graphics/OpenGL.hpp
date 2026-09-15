@@ -142,6 +142,15 @@ public:
     static void bind_texture_cube_to_unit(uint32_t unit, uint32_t texture_id);
 
     /**
+        * @brief Copies the depth buffer of src_fbo into dst_fbo.
+        * @param src_fbo Framebuffer to read the depth buffer from.
+        * @param dst_fbo Framebuffer to copy the depth buffer into.
+        * @param width Width of both framebuffers.
+        * @param height Height of both framebuffers.
+        */
+    static void blit_depth_buffer(uint32_t src_fbo, uint32_t dst_fbo, int width, int height);
+
+    /**
         * @brief Retrieve the shader compilation error log message.
         * @param shader_id Shader id for which the compilation failed.
         * @returns shader compilation error message.
