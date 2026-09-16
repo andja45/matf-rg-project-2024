@@ -1,3 +1,4 @@
+#include <DeferredRenderer.hpp>
 #include <RendererFactory.hpp>
 #include <engine/util/Errors.hpp>
 

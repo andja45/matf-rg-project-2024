@@ -7,8 +7,6 @@
 namespace app {
 class DeferredRenderer final : public IRenderer {
     std::unique_ptr<engine::graphics::GBuffer> m_gbuffer;
-    uint32_t m_quad_vao = 0;
-    uint32_t m_quad_vbo = 0;
     uint32_t m_width = 0;
     uint32_t m_height = 0;
 

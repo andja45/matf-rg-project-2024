@@ -189,6 +189,49 @@ void OpenGL::blit_depth_buffer(uint32_t src_fbo, uint32_t dst_fbo, int width, in
     CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, dst_fbo);
 }
 
+void OpenGL::bind_framebuffer(uint32_t fbo) {
+    CHECKED_GL_CALL(glBindFramebuffer, GL_FRAMEBUFFER, fbo);
+}
+
+void OpenGL::render_fullscreen_quad() {
+    static uint32_t quad_vao = 0;
+    static uint32_t quad_vbo = 0;
+    if (quad_vao == 0) {
+        float quad_vertices[] = {
+                -1.0f,
+                1.0f,
+                0.0f,
+                1.0f,
+                -1.0f,
+                -1.0f,
+                0.0f,
+                0.0f,
+                1.0f,
+                1.0f,
+                1.0f,
+                1.0f,
+                1.0f,
+                -1.0f,
+                1.0f,
+                0.0f,
+        };
+        CHECKED_GL_CALL(glGenVertexArrays, 1, &quad_vao);
+        CHECKED_GL_CALL(glGenBuffers, 1, &quad_vbo);
+        CHECKED_GL_CALL(glBindVertexArray, quad_vao);
+        CHECKED_GL_CALL(glBindBuffer, GL_ARRAY_BUFFER, quad_vbo);
+        CHECKED_GL_CALL(glBufferData, GL_ARRAY_BUFFER, sizeof(quad_vertices), quad_vertices, GL_STATIC_DRAW);
+        CHECKED_GL_CALL(glEnableVertexAttribArray, 0);
+        CHECKED_GL_CALL(glVertexAttribPointer, 0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *) 0);
+        CHECKED_GL_CALL(glEnableVertexAttribArray, 1);
+        CHECKED_GL_CALL(glVertexAttribPointer, 1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
+                        (void *) (2 * sizeof(float)));
+        CHECKED_GL_CALL(glBindVertexArray, 0);
+    }
+    CHECKED_GL_CALL(glBindVertexArray, quad_vao);
+    CHECKED_GL_CALL(glDrawArrays, GL_TRIANGLE_STRIP, 0, 4);
+    CHECKED_GL_CALL(glBindVertexArray, 0);
+}
+
 uint32_t face_index(std::string_view name) {
     if (name == "right") {
         return 0;
