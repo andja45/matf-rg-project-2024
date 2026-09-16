@@ -16,14 +16,14 @@ class SceneObject {
     bool m_visible = true;
 
     float m_specular_strength = 1.0f;
-    std::string m_shader_name = "blinn_phong";
+    std::string m_shader_name = "lighting";
     glm::vec3 m_emissive_color = glm::vec3(0.0f);
 
 public:
     SceneObject(std::string model_name, glm::vec3 position, glm::vec3 scale,
                 glm::vec3 rotation_axis = glm::vec3(0.0f, 1.0f, 0.0f), float rotation_angle = 0.0f,
                 float specular_strength = 1.0f,
-                std::string shader_name = "blinn_phong", glm::vec3 emissive_color = glm::vec3(0.0f));
+                std::string shader_name = "lighting", glm::vec3 emissive_color = glm::vec3(0.0f));
 
     const std::string &model_name() const;
 

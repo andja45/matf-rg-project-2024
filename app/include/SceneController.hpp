@@ -1,6 +1,7 @@
 #ifndef SCENECONTROLLER_HPP
 #define SCENECONTROLLER_HPP
 #include <EventChain.hpp>
+#include <IRenderer.hpp>
 #include <Light.hpp>
 #include <Scene.hpp>
 #include <engine/core/Engine.hpp>
@@ -42,6 +43,10 @@ public:
 
     void set_bloom_threshold(float threshold);
 
+    RendererType renderer_type() const;
+
+    void set_renderer_type(RendererType type);
+
 private:
     Scene m_scene;
     std::unique_ptr<EventChain> m_event_chain;
@@ -49,6 +54,8 @@ private:
     bool m_bloom_enabled{true};
     std::unique_ptr<engine::graphics::PointShadowFramebuffer> m_point_shadow_fb;
     bool m_point_shadows_enabled{true};
+    std::unique_ptr<IRenderer> m_renderer;
+    RendererType m_renderer_type = RendererType::Deferred;
 
     float m_bloom_threshold{0.65f};
 
@@ -75,8 +82,6 @@ private:
     void draw_skybox();
 
     void render_point_shadow_depth();
-
-    void set_light_uniforms(engine::resources::Shader *shader);
 
     void update_camera();
 

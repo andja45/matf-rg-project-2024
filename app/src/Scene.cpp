@@ -15,7 +15,7 @@ void Scene::initialize() {
 
     SceneObject crystal("crystals_of_power", glm::vec3(1.1f, -0.4f, -6.9f), glm::vec3(0.011f),
                         glm::vec3(1.0f, 0.0f, 0.0f), -92.0f,
-                        0.5f, "blinn_phong", glm::vec3(0.7608, 0.2431, 0.3961) * 1.55f);
+                        0.5f, "lighting", glm::vec3(0.7608, 0.2431, 0.3961) * 1.55f);
     glm::vec3 crystal_position = crystal.position();
     add_object(std::move(crystal));
 

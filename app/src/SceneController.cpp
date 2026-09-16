@@ -1,3 +1,4 @@
+#include <RendererFactory.hpp>
 #include <SceneController.hpp>
 #include <engine/core/Engine.hpp>
 #include <engine/graphics/GraphicsController.hpp>
@@ -16,6 +17,9 @@ void SceneController::initialize() {
                                                               platform->window()->height());
 
     m_point_shadow_fb = std::make_unique<engine::graphics::PointShadowFramebuffer>(POINT_SHADOW_SIZE);
+
+    m_renderer = RendererFactory::create(m_renderer_type);
+    m_renderer->initialize(platform->window()->width(), platform->window()->height());
 }
 
 bool SceneController::loop() {
@@ -65,10 +69,19 @@ void SceneController::draw() {
     render_point_shadow_depth();
     m_bloom->begin_scene_capture();
 
-    engine::graphics::OpenGL::bind_texture_cube_to_unit(1, m_point_shadow_fb->depth_cubemap_id());
+    std::vector<SceneObject *> lit_objects;
+    for (auto &object: m_scene.objects_mutable()) {
+        if (object.visible() && object.shader_name() == "lighting") {
+            lit_objects.push_back(&object);
+        }
+    }
+    m_renderer->render(lit_objects, m_scene.directional_light(), m_scene.point_light(),
+                       graphics->projection_matrix(), graphics->camera()->view_matrix(), graphics->camera()->Position,
+                       m_point_shadow_fb->depth_cubemap_id(), POINT_SHADOW_FAR_PLANE, m_point_shadows_enabled,
+                       m_bloom->scene_fbo_id());
 
     for (const auto &object: m_scene.objects()) {
-        if (!object.visible()) {
+        if (!object.visible() || object.shader_name() == "lighting") {
             continue;
         }
 
@@ -78,13 +91,8 @@ void SceneController::draw() {
         shader->set_mat4("view", graphics->camera()->view_matrix());
         shader->set_vec3("viewPos", graphics->camera()->Position);
         shader->set_float("time", platform->frame_time().current);
-        set_light_uniforms(shader);
         shader->set_vec3("emissiveColor", object.emissive_color());
         shader->set_float("specularStrength", object.specular_strength());
-
-        shader->set_int("pointShadowMap", 1);
-        shader->set_float("pointShadowFarPlane", POINT_SHADOW_FAR_PLANE);
-        shader->set_bool("pointShadows", m_point_shadows_enabled);
 
         shader->set_mat4("model", object.model_matrix());
         resources->model(object.model_name())->draw(shader);
@@ -122,23 +130,6 @@ void SceneController::render_point_shadow_depth() {
         resources->model(object.model_name())->draw(shader);
     }
     m_point_shadow_fb->unbind(platform->window()->width(), platform->window()->height());
-}
-
-void SceneController::set_light_uniforms(engine::resources::Shader *shader) {
-    const auto &dir = m_scene.directional_light();
-    shader->set_vec3("dirLight.direction", dir.direction);
-    shader->set_vec3("dirLight.ambient", dir.ambient * dir.intensity);
-    shader->set_vec3("dirLight.diffuse", dir.diffuse * dir.intensity);
-    shader->set_vec3("dirLight.specular", dir.specular * dir.intensity);
-
-    const auto &point = m_scene.point_light();
-    shader->set_vec3("pointLights[0].position", point.position);
-    shader->set_float("pointLights[0].constant", point.constant);
-    shader->set_float("pointLights[0].linear", point.linear);
-    shader->set_float("pointLights[0].quadratic", point.quadratic);
-    shader->set_vec3("pointLights[0].ambient", point.ambient * point.intensity);
-    shader->set_vec3("pointLights[0].diffuse", point.diffuse * point.intensity);
-    shader->set_vec3("pointLights[0].specular", point.specular * point.intensity);
 }
 
 void SceneController::end_draw() {
@@ -216,6 +207,20 @@ float SceneController::bloom_threshold() const {
 
 void SceneController::set_bloom_threshold(float threshold) {
     m_bloom_threshold = threshold;
+}
+
+RendererType SceneController::renderer_type() const {
+    return m_renderer_type;
+}
+
+void SceneController::set_renderer_type(RendererType type) {
+    if (type == m_renderer_type) {
+        return;
+    }
+    m_renderer_type = type;
+    auto platform = engine::core::Controller::get<engine::platform::PlatformController>();
+    m_renderer = RendererFactory::create(m_renderer_type);
+    m_renderer->initialize(platform->window()->width(), platform->window()->height());
 }
 
 void SceneController::update_camera() {

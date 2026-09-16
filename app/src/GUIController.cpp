@@ -1,4 +1,5 @@
 #include <GUIController.hpp>
+#include <IRenderer.hpp>
 #include <SceneController.hpp>
 #include <engine/core/Engine.hpp>
 #include <engine/graphics/GraphicsController.hpp>
@@ -55,6 +56,14 @@ void GUIController::draw() {
         scene_controller->set_point_shadows_enabled(point_shadows_enabled);
     }
 
+    ImGui::End();
+
+    ImGui::Begin("Renderer");
+    const char *renderer_type_names[] = {"Deferred", "Forward+"};
+    int renderer_type_index = static_cast<int>(scene_controller->renderer_type());
+    if (ImGui::Combo("Renderer type", &renderer_type_index, renderer_type_names, IM_ARRAYSIZE(renderer_type_names))) {
+        scene_controller->set_renderer_type(static_cast<RendererType>(renderer_type_index));
+    }
     ImGui::End();
 
     draw_scene_editor(scene_controller);
